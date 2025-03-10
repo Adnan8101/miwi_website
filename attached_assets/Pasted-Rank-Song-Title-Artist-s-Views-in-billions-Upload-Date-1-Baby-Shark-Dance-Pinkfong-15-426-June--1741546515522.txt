@@ -1,0 +1,51 @@
+Rank	Song Title	Artist(s)	Views (in billions)	Upload Date
+1	"Baby Shark Dance"	Pinkfong	15.426	June 18, 2016
+2	"Despacito"	Luis Fonsi ft. Daddy Yankee	8.614	January 13, 2017
+3	"Johny Johny Yes Papa"	LooLoo Kids	6.993	October 8, 2016
+4	"Bath Song"	CoComelon	6.946	May 2, 2018
+5	"Wheels on the Bus"	CoComelon	6.886	May 24, 2018
+6	"See You Again"	Wiz Khalifa ft. Charlie Puth	6.506	April 7, 2015
+7	"Shape of You"	Ed Sheeran	6.384	January 30, 2017
+8	"Phonics Song with TWO Words"	ChuChu TV	6.174	March 6, 2014
+9	"Uptown Funk"	Mark Ronson ft. Bruno Mars	5.425	November 19, 2014
+10	"Gangnam Style"	Psy	5.395	July 15, 2012
+11	"Learning Colors – Colorful Eggs on a Farm"	Miroshka TV	5.203	February 27, 2018
+12	"Axel F"	Crazy Frog	4.925	June 17, 2009
+13	"Dame Tu Cosita"	El Chombo ft. Cutty Ranks	4.901	April 5, 2018
+14	"Masha and the Bear – Recipe for Disaster"	Get Movies	4.613	January 31, 2012
+15	"Baa Baa Black Sheep"	CoComelon	4.316	June 25, 2018
+16	"Lakdi Ki Kathi"	Jingle Toons	4.297	June 14, 2018
+17	"Shree Hanuman Chalisa"	T-Series	4.235	May 10, 2011
+18	"Sugar"	Maroon 5	4.156	January 14, 2015
+19	"Waka Waka (This Time for Africa)"	Shakira ft. Freshlyground	4.116	June 5, 2010
+20	"Counting Stars"	OneRepublic	4.101	May 31, 2013
+21	"Roar"	Katy Perry	4.082	September 5, 2013
+22	"Humpty the Train on a Fruits Ride"	Kiddiestv Hindi	4.038	January 26, 2018
+23	"Sorry"	Justin Bieber	3.894	October 22, 2015
+24	"Dark Horse"	Katy Perry ft. Juicy J	3.870	February 20, 2014
+25	"Perfect"	Ed Sheeran	3.857	November 9, 2017
+26	"Thinking Out Loud"	Ed Sheeran	3.835	October 7, 2014
+27	"Let Her Go"	Passenger	3.755	July 25, 2012
+28	"Faded"	Alan Walker	3.740	December 3, 2015
+29	"Girls Like You"	Maroon 5 ft. Cardi B	3.736	May 31, 2018
+30	"Lean On"	Major Lazer & DJ Snake ft. MØ	3.705	March 23, 2015
+31	"Bailando"	Enrique Iglesias ft. Descemer Bueno & Gente de Zona	3.600	April 11, 2014
+32	"Shake It Off"	Taylor Swift	3.490	August 18, 2014
+33	"Let It Go"	Idina Menzel	3.430	January 30, 2014
+34	"Mi Gente"	J Balvin & Willy William	3.410	June 29, 2017
+35	"Baby"	Justin Bieber ft. Ludacris	3.250	February 19, 2010
+36	"We Don't Talk Anymore"	Charlie Puth ft. Selena Gomez	3.230	August 2, 2016
+37	"Hello"	Adele	3.170	October 22, 2015
+38	"All About That Bass"	Meghan Trainor	3.150	June 11, 2014
+39	"Chantaje"	Shakira ft. Maluma	3.000	November 18, 2016
+40	"Rockabye"	Clean Bandit ft. Sean Paul & Anne-Marie	2.990	October 21, 2016
+41	"Stressed Out"	Twenty One Pilots	2.960	April 27, 2015
+42	"Calma"	Pedro Capó & Farruko	2.940	October 4, 2018
+43	"Con Calma"	Daddy Yankee & Snow	2.910	January 23, 2019
+44	"Work from Home"	Fifth Harmony ft. Ty Dolla $ign	2.900	February 26, 2016
+45	"Love the Way You Lie"	Eminem ft. Rihanna	2.890	August 5, 2010
+46	"The Lazy Song"	Bruno Mars	2.850	April 15, 2011
+47	"This Is What You Came For"	Calvin Harris ft. Rihanna	2.810	June 16, 2016
+48	"Chandelier"	Sia	2.760	May 6, 2014
+49	"Believer"	Imagine Dragons	2.730	March 7, 2017
+50	"Criminal"	Natti Natasha ft. Ozuna	2.650	August 18, 2017

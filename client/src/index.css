@@ -1,0 +1,306 @@
+/* Font settings */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-[#0A0A0B] text-white;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    @apply overflow-x-hidden;
+  }
+
+  /* Enhanced smooth scrolling */
+  :root {
+    scroll-padding-top: 2rem;
+    --scroll-behavior: smooth;
+    --scroll-timeline: none;
+  }
+
+  /* Improved animation performance */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: transform, opacity;
+  }
+}
+
+/* Custom theme */
+:root {
+  --background: 240 10% 4%;
+  --foreground: 0 0% 100%;
+  --primary: 348 83% 47%;  /* Vibrant red accent color */
+  --primary-foreground: 0 0% 100%;
+  --card: 240 10% 4%;
+  --card-foreground: 0 0% 100%;
+  --muted: 240 5% 16%;
+  --muted-foreground: 240 5% 65%;
+}
+
+/* Enhanced smooth page transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 300ms, transform 300ms;
+}
+
+/* Sections */
+.section {
+  @apply min-h-screen relative flex items-center justify-center py-20 overflow-hidden;
+  scroll-snap-align: start;
+  will-change: transform;
+}
+
+main {
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
+  height: 100vh;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Text styles */
+h1, h2, h3, h4, h5, h6 {
+  @apply text-white font-bold tracking-tight;
+}
+
+p {
+  @apply text-gray-300;
+}
+
+/* Premium Shine Effect */
+.shine-effect {
+  position: relative;
+}
+
+.shine-effect svg {
+  position: relative;
+  overflow: visible;
+  filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.5));
+}
+
+.shine-effect svg .diamond-fill {
+  fill: rgb(239, 68, 68);
+  fill-opacity: 0.2;
+  transition: all 0.3s ease;
+}
+
+.shine-effect svg .diamond-stroke {
+  stroke: rgb(239, 68, 68);
+  transition: all 0.3s ease;
+}
+
+.shine-effect:hover svg {
+  filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.8));
+}
+
+.shine-effect:hover svg .diamond-fill {
+  fill-opacity: 0.4;
+}
+
+.shine-effect:hover svg .diamond-stroke {
+  stroke-width: 2;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Gradient Text Effect */
+.gradient-text {
+  position: relative;
+  isolation: isolate;
+}
+
+.gradient-text::before {
+  content: '';
+  position: absolute;
+  inset: -2px -4px;
+  background: linear-gradient(90deg, 
+    rgba(239, 68, 68, 0.2),
+    rgba(239, 68, 68, 0.1),
+    rgba(239, 68, 68, 0.05)
+  );
+  filter: blur(10px);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.75;
+  animation: pulse 4s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.75; }
+  50% { opacity: 0.5; }
+}
+
+/* Cards and Animations */
+.feature-card {
+  @apply bg-[#111112] rounded-lg p-6 border border-gray-800 text-white 
+         transform transition-all duration-300 hover:scale-105 hover:border-primary/50;
+  will-change: transform;
+}
+
+.player-card {
+  @apply bg-[#111112]/95 backdrop-blur-lg rounded-lg border border-white/10 text-white
+         transform transition-all duration-300;
+  box-shadow: 0 8px 32px 0 rgba(239, 68, 68, 0.1);
+  will-change: transform, opacity;
+}
+
+/* Player Icons */
+.player-icon {
+  @apply transition-transform duration-200;
+  will-change: transform;
+}
+
+.player-icon:hover {
+  @apply scale-110;
+}
+
+.player-icon path,
+.player-icon line {
+  @apply transition-colors duration-200;
+}
+
+/* Player Controls */
+.player-controls {
+  @apply flex items-center justify-center gap-4;
+}
+
+.player-button {
+  @apply w-10 h-10 flex items-center justify-center rounded-full
+         text-white/80 hover:text-white transition-colors
+         hover:bg-primary/10 active:scale-95
+         transition-all duration-200;
+  will-change: transform;
+}
+
+.player-button-main {
+  @apply w-12 h-12 rounded-full bg-primary/10 hover:bg-primary/20 
+         flex items-center justify-center text-white 
+         transition-all duration-200;
+  will-change: transform;
+}
+
+.player-button {
+  @apply w-10 h-10 flex items-center justify-center rounded-full
+         text-primary hover:text-white transition-colors
+         hover:bg-primary/10 active:scale-95
+         transition-all duration-200;
+  will-change: transform;
+}
+
+/* Navigation */
+.nav-link {
+  @apply text-white hover:text-primary transition-colors duration-300;
+}
+
+/* Buttons */
+.btn-primary {
+  @apply bg-primary text-white font-medium px-6 py-2 rounded-md 
+         hover:bg-primary/90 transition-all duration-300 
+         transform hover:scale-105 active:scale-95;
+  will-change: transform;
+}
+
+.btn-outline {
+  @apply border-2 border-primary text-white px-6 py-2 rounded-md 
+         hover:bg-primary/10 transition-all duration-300 
+         transform hover:scale-105 active:scale-95;
+  will-change: transform;
+}
+
+/* Commands Page Transitions */
+.category-transition {
+  @apply transition-all duration-300 ease-in-out;
+  will-change: transform, opacity, height;
+}
+
+.category-content-enter {
+  @apply transform translate-y-2 opacity-0;
+}
+
+.category-content-enter-active {
+  @apply transform translate-y-0 opacity-100;
+}
+
+.category-content-exit {
+  @apply transform translate-y-0 opacity-100;
+}
+
+.category-content-exit-active {
+  @apply transform translate-y-2 opacity-0;
+}
+
+/* Container styles */
+.container {
+  @apply mx-auto px-4;
+  max-width: 1140px;
+}
+
+/* Mobile optimizations */
+@media (max-width: 1024px) {
+  .container {
+    @apply px-6;
+    max-width: 1024px;
+  }
+
+  h1 {
+    @apply text-4xl;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    @apply px-4;
+    max-width: 767px;
+  }
+
+  h1 {
+    @apply text-3xl;
+  }
+
+  .player-card {
+    @apply w-[280px];
+  }
+}
+
+/* Optimize animations */
+/* This section is already covered in @layer base */
