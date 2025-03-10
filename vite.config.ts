@@ -30,7 +30,8 @@ export default defineConfig({
   },
   root: path.resolve(__dirname, "client"),
   build: {
-    outDir: path.resolve(__dirname, "dist/public"),
-    emptyOutDir: true,
+    // Update the output directory to be directly inside 'dist', not 'dist/public'
+    outDir: path.resolve(__dirname, "dist"),  // This should be 'dist', not 'dist/public'
+    emptyOutDir: true,  // Ensures the 'dist' folder is cleared before building
   },
 });
