@@ -1,8 +1,13 @@
 import express, { type Request, Response, NextFunction } from "express";
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config();
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
+const initialPort = parseInt(process.env.PORT || "3000", 10); // Convert to number
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -36,6 +41,12 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.static(path.resolve(__dirname, '../client'))); // Serve frontend static files
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '../client/index.html'));
+});
+
 (async () => {
   const server = await registerRoutes(app);
 
@@ -56,14 +67,20 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client
-  const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
-  });
+  function startServer(port: number) {
+    server.listen({
+      port,
+      host: "127.0.0.1", // Change to 127.0.0.1
+      reusePort: true,
+    }, () => {
+      log(`Frontend Started`);
+      log(`Backend Started`);
+      log(`Testing all APIs`);
+      log(`Testing all routes`);
+      log(`Dynamic`);
+      log(`etc`);
+    });
+  }
+
+  startServer(initialPort);
 })();

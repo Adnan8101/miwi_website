@@ -16,9 +16,7 @@ export default defineConfig({
     ...(process.env.NODE_ENV !== "production" &&
     process.env.REPL_ID !== undefined
       ? [
-          await import("@replit/vite-plugin-cartographer").then((m) =>
-            m.cartographer(),
-          ),
+          (await import("@replit/vite-plugin-cartographer")).cartographer(),
         ]
       : []),
   ],
@@ -30,8 +28,7 @@ export default defineConfig({
   },
   root: path.resolve(__dirname, "client"),
   build: {
-    // Update the output directory to be directly inside 'dist', not 'dist/public'
-    outDir: path.resolve(__dirname, "dist"),  // This should be 'dist', not 'dist/public'
-    emptyOutDir: true,  // Ensures the 'dist' folder is cleared before building
+    outDir: path.resolve(__dirname, "dist/client"),
+    emptyOutDir: true,
   },
 });

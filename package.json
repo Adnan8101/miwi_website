@@ -4,11 +4,15 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "tsx server/index.ts",
-    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
-    "start": "NODE_ENV=production node dist/index.js",
+    "dev": "concurrently \"vite\" \"tsx server/index.ts\"",
+    "build": "npm run build:frontend && npm run build:backend",
+    "start:server": "node dist/server/index.js",
+    "start": "npm run start:server",
     "check": "tsc",
-    "db:push": "drizzle-kit push"
+    "db:push": "drizzle-kit push",
+    "build:client": "vite build",
+    "build:frontend": "vite build",
+    "build:backend": "esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist/server"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -49,6 +53,7 @@
     "cmdk": "^1.0.0",
     "connect-pg-simple": "^10.0.0",
     "date-fns": "^3.6.0",
+    "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.1",
     "drizzle-zod": "^0.7.0",
     "embla-carousel-react": "^8.3.0",
@@ -97,7 +102,8 @@
     "tailwindcss": "^3.4.14",
     "tsx": "^4.19.1",
     "typescript": "5.6.3",
-    "vite": "^5.4.14"
+    "vite": "^5.4.14",
+    "concurrently": "^7.0.0"
   },
   "optionalDependencies": {
     "bufferutil": "^4.0.8"

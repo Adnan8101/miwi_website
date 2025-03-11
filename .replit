@@ -1,5 +1,5 @@
 modules = ["nodejs-20", "bash", "web"]
-run = "npm run dev"
+run = "PORT=3000 npm run dev"
 hidden = [".config", ".git", "generated-icon.png", "node_modules", "dist"]
 
 [nix]
@@ -10,7 +10,7 @@ deploymentTarget = "cloudrun"
 run = ["sh", "-c", "npm run dev"]
 
 [[ports]]
-localPort = 5000
+localPort = 3000
 externalPort = 80
 
 [workflows]
@@ -38,4 +38,4 @@ task = "packager.installForAll"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "npm run dev"
-waitForPort = 5000
+waitForPort = 3000
