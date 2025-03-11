@@ -1,6 +1,13 @@
 import express, { type Request, Response, NextFunction } from "express";
 import dotenv from 'dotenv';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import findPort from 'find-port';
+import { exec } from 'child_process';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 dotenv.config();
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
@@ -82,5 +89,32 @@ app.get('*', (req, res) => {
     });
   }
 
-  startServer(initialPort);
+  findPort(initialPort, (err: Error | null, freePorts: number[]) => {
+    if (err) {
+      console.error('Error finding free port:', err);
+      process.exit(1);
+    }
+
+    console.log('Free ports found:', freePorts); // Debug log
+
+    if (!freePorts || freePorts.length === 0) {
+      console.error('No free port found');
+      process.exit(1);
+    }
+
+    const freePort = freePorts[0];
+    if (freePort !== initialPort) {
+      console.log(`Port ${initialPort} is busy, using port ${freePort} instead.`);
+      exec(`lsof -t -i:${initialPort} | xargs kill -9`, (err) => {
+        if (err) {
+          console.error('Error killing process on port:', err);
+        } else {
+          console.log(`Killed process on port ${initialPort}`);
+        }
+        startServer(freePort);
+      });
+    } else {
+      startServer(initialPort);
+    }
+  });
 })();
