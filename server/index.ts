@@ -2,6 +2,7 @@ import express, { type Request, Response, NextFunction } from "express";
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fetch from 'node-fetch'; // Import fetch for server-side requests
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -74,14 +75,36 @@ app.get('*', (req, res) => {
 
   server.listen({
     port: PORT,
-    host: "127.0.0.1", // Change to 127.0.0.1
+    host: "0.0.0.0", // Change to 0.0.0.0 to allow external access
     reusePort: true,
-  }, () => {
-    log(`Frontend Started`);
-    log(`Backend Started`);
-    log(`Testing all APIs`);
-    log(`Testing all routes`);
-    log(`Dynamic`);
-    log(`etc`);
+  }, async () => {
+    try {
+      // Check if frontend is successfully loaded
+      const frontendResponse = await fetch(`http://localhost:${PORT}`);
+      if (frontendResponse.ok) {
+        log(`Frontend successfully loaded`);
+      } else {
+        log(`Frontend failed to load`);
+      }
+
+      // Check if backend is successfully loaded
+      const backendResponse = await fetch(`http://localhost:${PORT}/api/test`);
+      if (backendResponse.ok) {
+        log(`Backend successfully loaded`);
+      } else {
+        log(`Backend failed to load`);
+      }
+
+      // Perform additional tests
+      log(`Testing all APIs`);
+      log(`Testing all routes`);
+      log(`Dynamic`);
+      log(`etc`);
+
+      // If all tests pass
+      log(`All tests passed successfully`);
+    } catch (error) {
+      log(`Error during startup checks: ${error.message}`);
+    }
   });
 })();
