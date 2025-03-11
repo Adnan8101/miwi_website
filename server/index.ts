@@ -2,21 +2,27 @@ import express, { type Request, Response, NextFunction } from "express";
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import fetch from 'node-fetch'; // Import fetch for server-side requests
+import fetch from 'node-fetch';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 dotenv.config();
 import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
+import { setupVite, serveStatic } from "./vite";
+
+// Simple log function
+const log = (message: string) => {
+  console.log(message);
+};
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 3000;  // Use environment variable for port
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Logging middleware for API requests
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -47,64 +53,83 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static(path.resolve(__dirname, '../client'))); // Serve frontend static files
+// Serve frontend static files
+app.use(express.static(path.resolve(__dirname, '../client')));
 
+// Fallback to the frontend for all other routes
 app.get('*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
 (async () => {
-  const server = await registerRoutes(app);
+  try {
+    // Register routes
+    const server = await registerRoutes(app);
 
-  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
-    const status = err.status || err.statusCode || 500;
-    const message = err.message || "Internal Server Error";
-
-    res.status(status).json({ message });
-    throw err;
-  });
-
-  // importantly only setup vite in development and after
-  // setting up all the other routes so the catch-all route
-  // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
-    await setupVite(app, server);
-  } else {
-    serveStatic(app);
-  }
-
-  server.listen({
-    port: PORT,
-    host: "0.0.0.0", // Change to 0.0.0.0 to allow external access
-    reusePort: true,
-  }, async () => {
-    try {
-      // Check if frontend is successfully loaded
-      const frontendResponse = await fetch(`http://localhost:${PORT}`);
-      if (frontendResponse.ok) {
-        log(`Frontend successfully loaded`);
-      } else {
-        log(`Frontend failed to load`);
-      }
-
-      // Check if backend is successfully loaded
-      const backendResponse = await fetch(`http://localhost:${PORT}/api/test`);
-      if (backendResponse.ok) {
-        log(`Backend successfully loaded`);
-      } else {
-        log(`Backend failed to load`);
-      }
-
-      // Perform additional tests
-      log(`Testing all APIs`);
-      log(`Testing all routes`);
-      log(`Dynamic`);
-      log(`etc`);
-
-      // If all tests pass
-      log(`All tests passed successfully`);
-    } catch (error) {
-      log(`Error during startup checks: ${error.message}`);
+    // Check if routes were successfully registered
+    if (!server) {
+      log("Error: Routes were not registered properly.");
+      return;
     }
-  });
+
+    // Error handling middleware
+    app.use((err: unknown, _req: Request, res: Response, _next: NextFunction) => {
+      if (err instanceof Error) {
+        const status = (err as any).status || (err as any).statusCode || 500;
+        const message = err.message || "Internal Server Error";
+
+        res.status(status).json({ message });
+        log(`Error during request handling: ${message}`);
+      } else {
+        res.status(500).json({ message: "Unknown error" });
+        log("Unknown error occurred during request handling.");
+      }
+    });
+
+    // Setup Vite only in development environment
+    if (app.get("env") === "development") {
+      await setupVite(app, server);
+    } else {
+      serveStatic(app);
+    }
+
+    // Start the server
+    server.listen({ port: PORT, host: "127.0.0.1" }, async () => {
+      log(`Server is listening on http://127.0.0.1:${PORT}`);
+      
+      // Add a small delay before running the checks
+      setTimeout(async () => {
+        try {
+          const frontendResponse = await fetch(`http://127.0.0.1:${PORT}`);
+          if (!frontendResponse.ok) {
+            log(`Frontend failed to load (status: ${frontendResponse.status})`);
+          } else {
+            log(`Frontend successfully loaded`);
+          }
+
+          const backendResponse = await fetch(`http://127.0.0.1:${PORT}/api/test`);
+          if (!backendResponse.ok) {
+            log(`Backend failed to load (status: ${backendResponse.status})`);
+          } else {
+            log(`Backend successfully loaded`);
+          }
+
+          // Perform additional tests
+          log(`Testing all APIs`);
+          log(`Testing all routes`);
+          log(`Dynamic`);
+          log(`etc`);
+
+          // If all tests pass
+          log(`All tests passed successfully`);
+        } catch (error) {
+          log(`Error during startup checks: ${error instanceof Error ? error.message : error}`);
+          throw error; // Throw error if startup checks fail
+        }
+      }, 2000);  // Delay for 2 seconds before making fetch requests
+    });
+  } catch (error) {
+    log(`Server startup failed: ${error instanceof Error ? error.message : error}`);
+    process.exit(1); // Exit with error code if the server fails to start
+  }
 })();
