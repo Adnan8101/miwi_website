@@ -2,8 +2,6 @@ import express, { type Request, Response, NextFunction } from "express";
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import findPort from 'find-port';
-import { exec } from 'child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -13,7 +11,7 @@ import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
 const app = express();
-const initialPort = parseInt(process.env.PORT || "3000", 10); // Convert to number
+const PORT = 5000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -74,47 +72,16 @@ app.get('*', (req, res) => {
     serveStatic(app);
   }
 
-  function startServer(port: number) {
-    server.listen({
-      port,
-      host: "127.0.0.1", // Change to 127.0.0.1
-      reusePort: true,
-    }, () => {
-      log(`Frontend Started`);
-      log(`Backend Started`);
-      log(`Testing all APIs`);
-      log(`Testing all routes`);
-      log(`Dynamic`);
-      log(`etc`);
-    });
-  }
-
-  findPort(initialPort, (err: Error | null, freePorts: number[]) => {
-    if (err) {
-      console.error('Error finding free port:', err);
-      process.exit(1);
-    }
-
-    console.log('Free ports found:', freePorts); // Debug log
-
-    if (!freePorts || freePorts.length === 0) {
-      console.error('No free port found');
-      process.exit(1);
-    }
-
-    const freePort = freePorts[0];
-    if (freePort !== initialPort) {
-      console.log(`Port ${initialPort} is busy, using port ${freePort} instead.`);
-      exec(`lsof -t -i:${initialPort} | xargs kill -9`, (err) => {
-        if (err) {
-          console.error('Error killing process on port:', err);
-        } else {
-          console.log(`Killed process on port ${initialPort}`);
-        }
-        startServer(freePort);
-      });
-    } else {
-      startServer(initialPort);
-    }
+  server.listen({
+    port: PORT,
+    host: "127.0.0.1", // Change to 127.0.0.1
+    reusePort: true,
+  }, () => {
+    log(`Frontend Started`);
+    log(`Backend Started`);
+    log(`Testing all APIs`);
+    log(`Testing all routes`);
+    log(`Dynamic`);
+    log(`etc`);
   });
 })();
